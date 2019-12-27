@@ -1,0 +1,40 @@
+USE  modern-chat;
+
+
+-- ユーザーの情報を表す
+-- 認証系は Firebase の方に寄せる
+CREATE TABLE IF NOT EXISTS users (
+  id VARCHAR(36) NOT NULL
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- チャットルームを表す
+CREATE TABLE IF NOT EXISTS rooms (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  title VARCHAR(20) NOT NULL,
+  user_id VARCHAR(36) NOT NULL,
+  created_at DATETIME DEFAULT NULL,
+  updated_at DATETIME DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY (title)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- コメントを表す
+CREATE TABLE IF NOT EXISTS comments (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id VARCHAR(36) NOT NULL,
+  comment_id INT UNSIGNED NOT NULL,
+  content VARCHAR(200) NOT NULL,
+  created_at DATETIME DEFAULT NULL,
+  updated_at DATETIME DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- いいねを表す
+CREATE TABLE IF NOT EXISTS likes (
+  user_id VARCHAR(36) NOT NULL,
+  comment_id INT UNSIGNED NOT NULL,
+  created_at DATETIME DEFAULT NULL,
+  updated_at DATETIME DEFAULT NULL,
+  PRIMARY KEY (user_id, comment_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
