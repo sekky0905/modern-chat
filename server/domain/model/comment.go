@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/sekky0905/modern-chat/util"
+)
 
 // CommentID は、Comment の ID。
 type CommentID uint32
@@ -21,7 +25,7 @@ func NewComment(userID UserID, chatRoomID ChatRoomID, content string) *Comment {
 		UserID:     userID,
 		ChatRoomID: chatRoomID,
 		Content:    content,
-		CreatedAt:  time.Now(),
-		UpdatedAt:  time.Now(),
+		CreatedAt:  util.Now(),
+		UpdatedAt:  util.Now(),
 	}
 }

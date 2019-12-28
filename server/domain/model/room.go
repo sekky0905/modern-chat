@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/sekky0905/modern-chat/util"
+)
 
 // ChatRoomID は、ChatRoom のID。
 type ChatRoomID uint32
@@ -24,7 +28,7 @@ func NewChatRoom(title string, userID UserID) *ChatRoom {
 	return &ChatRoom{
 		Title:     title,
 		UserID:    userID,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		CreatedAt: util.Now(),
+		UpdatedAt: util.Now(),
 	}
 }
