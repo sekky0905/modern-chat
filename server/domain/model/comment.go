@@ -15,6 +15,7 @@ type Comment struct {
 	UserID     UserID
 	ChatRoomID ChatRoomID
 	Content    string
+	Liked      []UserID
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
@@ -25,6 +26,7 @@ func NewComment(userID UserID, chatRoomID ChatRoomID, content string) *Comment {
 		UserID:     userID,
 		ChatRoomID: chatRoomID,
 		Content:    content,
+		Liked:      []UserID{},
 		CreatedAt:  util.Now(),
 		UpdatedAt:  util.Now(),
 	}
