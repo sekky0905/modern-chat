@@ -6,6 +6,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/sekky0905/modern-chat/domain/repository"
 	"golang.org/x/xerrors"
 )
 
@@ -15,7 +16,7 @@ type db struct {
 }
 
 // NewDB は、DB を生成し、返す。
-func NewDB() (DB, error) {
+func NewDB() (repository.DB, error) {
 	conn, err := gorm.Open("mysql", "root:@tcp(nvgdb:3306)/nuxt_vue_go_chat?charset=utf8mb4&parseTime=True") // TODO 後でちゃんとした形にする
 	if err != nil {
 		return nil, xerrors.Errorf("failed to connect database: %w", err)
