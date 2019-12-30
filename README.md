@@ -24,3 +24,9 @@ Chat developed with modern technologies.
         - [Redux](https://github.com/reduxjs/redux)
     - GraphQL Client Library
         - [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator)
+
+## 参考
+
+### Logger
+
+- [Design considerations for Container based Go application - Speaker Deck](https://speakerdeck.com/hgsgtk/design-considerations-for-container-based-go-application)
