@@ -2,7 +2,7 @@ package db
 
 import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"golang.org/x/xerrors"
 )
 
@@ -13,7 +13,7 @@ type DB struct {
 
 // NewDB は、DB を生成し、返す。
 func NewDB() (*DB, error) {
-	db, err := gorm.Open("postgres", "host=host port=3306 user=root dbname=sample password=password") // TODO 後でちゃんとした形にする
+	db, err := gorm.Open("mysql", "root:@tcp(nvgdb:3306)/nuxt_vue_go_chat?charset=utf8mb4&parseTime=True") // TODO 後でちゃんとした形にする
 	if err != nil {
 		return nil, xerrors.Errorf("failed to connect database: %w", err)
 	}
