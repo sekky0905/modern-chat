@@ -5,11 +5,11 @@ import (
 	"log"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/sekky0905/modern-chat/infra/db"
+	"github.com/sekky0905/modern-chat/infra/datastore"
 )
 
 func main() {
-	db, err := db.NewDB()
+	db, err := datastore.NewDB()
 	if err != nil {
 		s := fmt.Sprintf("new database error. err = %v", err)
 		panic(s)
