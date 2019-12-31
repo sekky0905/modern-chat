@@ -44,6 +44,19 @@ func (c *ChatRoom) TranslateToDomainModel() *model.ChatRoom {
 	}
 }
 
+// newChatRoomTranslateFromDomainModel は、Domain Model から ChatRoom を生成し、返す。
+func newChatRoomTranslateFromDomainModel(in *model.ChatRoom) ChatRoom {
+	return ChatRoom{
+		Title:  in.Title,
+		UserID: in.UserID.String(),
+	}
+}
+
+// newChatRoomIDFromUint は、Uint の値から ChatRoomID を生成し、返す。
+func newChatRoomIDFromUint(id uint) model.ChatRoomID {
+	return model.ChatRoomID(id)
+}
+
 // Comment は、コメントを表す。
 type Comment struct {
 	gorm.Model
