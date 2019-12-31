@@ -27,6 +27,9 @@ func (db dbMock) truncateTables() {
 	}
 }
 
+// DBMock は、DB の Mock。
+var DBMock *dbMock
+
 func TestMain(m *testing.M) {
 	pool, resource := initDB()
 	code := m.Run()

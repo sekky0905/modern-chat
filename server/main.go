@@ -16,7 +16,7 @@ func main() {
 	}
 
 	defer func() {
-		if err := db.CloseDB(); err != nil {
+		if err := db.Close(); err != nil {
 			// TODO log は後に変更すること
 			log.Printf("close database error. err = %v\n", err)
 		}

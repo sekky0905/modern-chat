@@ -9,7 +9,7 @@ import (
 // ChatRoomID は、ChatRoom のID。
 type ChatRoomID uint32
 
-// String は、UserID を string 型にして返す。
+// String は、ChatRoomID を string 型にして返す。
 func (id ChatRoomID) String() string {
 	return string(id)
 }
