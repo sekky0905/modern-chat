@@ -61,7 +61,7 @@ func newChatRoomIDFromUint(id uint) model.ChatRoomID {
 type Comment struct {
 	gorm.Model
 	UserID     string `gorm:"type:varchar(36)"`
-	ChatRoomID uint32
+	ChatRoomID uint
 	Content    string `gorm:"type:varchar(200)"`
 }
 
@@ -82,6 +82,20 @@ func (c *Comment) TranslateToDomainModel(likes []Like) *model.Comment {
 		CreatedAt:  c.CreatedAt,
 		UpdatedAt:  c.UpdatedAt,
 	}
+}
+
+// newCommentTranslateFromDomainModel は、Domain Model から Comment を生成し、返す。
+func newCommentTranslateFromDomainModel(in *model.Comment) Comment {
+	return Comment{
+		UserID:     in.UserID.String(),
+		ChatRoomID: in.ChatRoomID.Uint(),
+		Content:    in.Content,
+	}
+}
+
+// newCommentIDFromUint は、Uint の値から CommentID を生成し、返す。
+func newCommentIDFromUint(id uint) model.CommentID {
+	return model.CommentID(id)
 }
 
 // Like は、いいねを表す。
