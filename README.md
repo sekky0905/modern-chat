@@ -11,7 +11,12 @@ Chat developed with modern technologies.
         - [gorm](https://github.com/jinzhu/gorm)
     - GraphQL Server Library
         - [gqlgen](https://github.com/99designs/gqlgen)
-- MySQL 
+## DB
+
+- RDB
+    - MySQL 
+- DB for Test
+    - [ory/dockertest](https://github.com/ory/dockertest)
 
 ### Front End
 
