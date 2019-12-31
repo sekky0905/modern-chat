@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/sekky0905/modern-chat/infra/datastore"
+	"github.com/sekky0905/modern-chat/server/infra/datastore"
 )
 
 func main() {

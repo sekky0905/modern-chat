@@ -1,8 +1,8 @@
 package datastore
 
 import (
-	"github.com/sekky0905/modern-chat/domain/model"
-	"github.com/sekky0905/modern-chat/domain/repository"
+	"github.com/sekky0905/modern-chat/server/domain/model"
+	"github.com/sekky0905/modern-chat/server/domain/repository"
 	"golang.org/x/xerrors"
 )
 

@@ -6,7 +6,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/sekky0905/modern-chat/domain/repository"
+	"github.com/sekky0905/modern-chat/server/domain/repository"
 	"golang.org/x/xerrors"
 )
 

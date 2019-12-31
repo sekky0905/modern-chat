@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/sekky0905/modern-chat/domain/model"
+	"github.com/sekky0905/modern-chat/server/domain/model"
 )
 
 // CommentRepository は、Comment の Repository。

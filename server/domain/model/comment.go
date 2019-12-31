@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/sekky0905/modern-chat/util"
+	"github.com/sekky0905/modern-chat/server/util"
 )
 
 // CommentID は、Comment の ID。
