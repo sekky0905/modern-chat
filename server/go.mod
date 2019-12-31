@@ -25,7 +25,7 @@ require (
 	golang.org/x/crypto v0.0.0-20191227163750-53104e6ec876 // indirect
 	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
 	golang.org/x/sys v0.0.0-20191224085550-c709ea063b76 // indirect
-	golang.org/x/tools v0.0.0-20191227053925-7b8e75db28f4 // indirect
+	golang.org/x/tools v0.0.0-20191227053925-7b8e75db28f4
 	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543
 	gotest.tools v2.2.0+incompatible // indirect
 )
