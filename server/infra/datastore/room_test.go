@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/jinzhu/gorm"
-	"github.com/sekky0905/modern-chat/domain/model"
-	"github.com/sekky0905/modern-chat/domain/repository"
+	"github.com/sekky0905/modern-chat/server/domain/model"
+	"github.com/sekky0905/modern-chat/server/domain/repository"
 )
 
 func compareChatRoom(x, y *ChatRoom) bool {

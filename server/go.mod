@@ -1,4 +1,4 @@
-module github.com/sekky0905/modern-chat
+module github.com/sekky0905/modern-chat/server
 
 go 1.13
 

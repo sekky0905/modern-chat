@@ -7,7 +7,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"github.com/ory/dockertest"
-	"github.com/sekky0905/modern-chat/util"
+	"github.com/sekky0905/modern-chat/server/util"
 )
 
 // dbMock は、db の mock。
