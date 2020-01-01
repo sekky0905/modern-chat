@@ -14,6 +14,11 @@ func (id ChatRoomID) String() string {
 	return string(id)
 }
 
+// Uint は、ChatRoomID を uint 型にして返す。
+func (id ChatRoomID) Uint() uint {
+	return uint(id)
+}
+
 // ChatRoom は、チャットルームを表す。
 type ChatRoom struct {
 	ID        ChatRoomID

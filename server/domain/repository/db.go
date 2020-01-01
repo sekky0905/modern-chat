@@ -56,4 +56,6 @@ type DB interface {
 	Get(name string) (value interface{}, ok bool)
 	AddError(err error) error
 	GetErrors() []error
+	Model(value interface{}) *gorm.DB
+	Unscoped() *gorm.DB
 }

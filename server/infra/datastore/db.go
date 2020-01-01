@@ -261,7 +261,17 @@ func (db *db) AddError(err error) error {
 	return db.conn.AddError(err)
 }
 
-// GetErrors (
+// GetErrors
 func (db *db) GetErrors() []error {
 	return db.conn.GetErrors()
+}
+
+// Model
+func (db *db) Model(value interface{}) *gorm.DB {
+	return db.conn.Model(value)
+}
+
+// Unscoped
+func (db *db) Unscoped() *gorm.DB {
+	return db.conn.Unscoped()
 }

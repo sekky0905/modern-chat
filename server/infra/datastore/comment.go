@@ -3,6 +3,7 @@ package datastore
 import (
 	"github.com/sekky0905/modern-chat/server/domain/model"
 	"github.com/sekky0905/modern-chat/server/domain/repository"
+	"golang.org/x/xerrors"
 )
 
 type commentRepository struct {
@@ -15,15 +16,26 @@ func NewCommentRepositpry() repository.CommentRepository {
 
 // SaveComment は、Comment を保存する。
 func (commentRepository) SaveComment(db repository.DB, comment *model.Comment) (model.CommentID, error) {
-	panic("implement me")
-}
+	commentDTO := newCommentTranslateFromDomainModel(comment)
 
-// UpdateComment は、Comment を更新する。
-func (commentRepository) UpdateComment(db repository.DB, id model.CommentID, room *model.Comment) (model.CommentID, error) {
-	panic("implement me")
+	db.Create(&commentDTO)
+
+	if db.NewRecord(commentDTO) {
+		return 0, xerrors.New("failed to create comment")
+	}
+
+	likeDTO := newLikesTranslateFromDomainModel(commentDTO.ID, comment.Liked)
+	for _, dto := range likeDTO {
+		db.Create(&dto)
+		if db.NewRecord(dto) {
+			return 0, xerrors.New("failed to create like")
+		}
+	}
+
+	return newCommentIDFromUint(commentDTO.ID), nil
 }
 
 // DeleteComment は、Comment を削除する。
-func (commentRepository) DeleteComment(db repository.DB, id model.CommentID) (model.CommentID, error) {
+func (commentRepository) DeleteComment(db repository.DB, comment *model.Comment) model.CommentID {
 	panic("implement me")
 }

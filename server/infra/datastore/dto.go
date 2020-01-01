@@ -61,7 +61,7 @@ func newChatRoomIDFromUint(id uint) model.ChatRoomID {
 type Comment struct {
 	gorm.Model
 	UserID     string `gorm:"type:varchar(36)"`
-	ChatRoomID uint
+	ChatRoomID uint   `gorm:"INT UNSIGNED NOT NULL"`
 	Content    string `gorm:"type:varchar(200)"`
 }
 
@@ -87,6 +87,11 @@ func (c *Comment) TranslateToDomainModel(likes []Like) *model.Comment {
 // newCommentTranslateFromDomainModel は、Domain Model から Comment を生成し、返す。
 func newCommentTranslateFromDomainModel(in *model.Comment) Comment {
 	return Comment{
+		Model: gorm.Model{
+			ID:        in.ID.Uint(),
+			CreatedAt: in.CreatedAt,
+			UpdatedAt: in.UpdatedAt,
+		},
 		UserID:     in.UserID.String(),
 		ChatRoomID: in.ChatRoomID.Uint(),
 		Content:    in.Content,
@@ -100,7 +105,22 @@ func newCommentIDFromUint(id uint) model.CommentID {
 
 // Like は、いいねを表す。
 type Like struct {
-	UserID    uint32 `gorm:"type:varchar(36)"`
-	CommentID uint32
+	UserID    string `gorm:"type:varchar(36);primary_key;auto_increment:false"`
+	CommentID uint   `gorm:"NOT NULL;default:0;primary_key;auto_increment:false"`
 	AtFields
+}
+
+// newLikesTranslateFromDomainModel は、Domain Model から Like を生成し、返す。
+func newLikesTranslateFromDomainModel(commentID uint, userIDs []model.UserID) []Like {
+	n := len(userIDs)
+	likes := make([]Like, n, n)
+	for i, userID := range userIDs {
+		like := Like{
+			UserID:    userID.String(),
+			CommentID: commentID,
+		}
+		likes[i] = like
+	}
+
+	return likes
 }
