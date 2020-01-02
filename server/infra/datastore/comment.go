@@ -37,5 +37,9 @@ func (commentRepository) SaveComment(db repository.DB, comment *model.Comment) (
 
 // DeleteComment は、Comment を削除する。
 func (commentRepository) DeleteComment(db repository.DB, comment *model.Comment) model.CommentID {
-	panic("implement me")
+	commentDTO := newCommentTranslateFromDomainModel(comment)
+	db.Unscoped().Delete(&commentDTO)
+	likeDTO := newLikesTranslateFromDomainModel(commentDTO.ID, comment.Liked)
+	db.Unscoped().Delete(&likeDTO)
+	return comment.ID
 }
