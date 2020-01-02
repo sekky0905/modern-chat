@@ -9,7 +9,7 @@ import (
 type chatRoomRepository struct {
 }
 
-// NewChatRoomRepositpry は、ChatRoomRepository を生成し、返す。
+// NewChatRoomRepository は、ChatRoomRepository を生成し、返す。
 func NewChatRoomRepositpry() repository.ChatRoomRepository {
 	return &chatRoomRepository{}
 }

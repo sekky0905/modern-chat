@@ -9,6 +9,11 @@ import (
 // CommentID は、Comment の ID。
 type CommentID uint32
 
+// Uint は、CommentID を uint 型にして返す。
+func (id CommentID) Uint() uint {
+	return uint(id)
+}
+
 // Comment は、コメントを表す。
 type Comment struct {
 	ID         CommentID
