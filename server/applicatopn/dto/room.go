@@ -7,6 +7,6 @@ import "time"
 type ChatRoomListDTO struct {
 	ID        uint
 	Title     string
-	UserID    uint
+	User      *UserDTO
 	CreatedAt time.Time
 }
