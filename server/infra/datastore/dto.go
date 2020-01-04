@@ -15,14 +15,16 @@ type AtFields struct {
 
 // User は、ユーザーを表す。
 type User struct {
-	ID uint32 `gorm:"type:varchar(36)"`
+	ID   string `gorm:"type:varchar(36)"`
+	Name string
 	AtFields
 }
 
 // TranslateToDomainModel は、domain model に移し替える。
 func (u *User) TranslateToDomainModel() *model.User {
 	return &model.User{
-		ID: model.UserID(u.ID),
+		ID:   model.UserID(u.ID),
+		Name: u.Name,
 	}
 }
 

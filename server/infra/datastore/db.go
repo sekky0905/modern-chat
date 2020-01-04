@@ -275,3 +275,8 @@ func (db *db) Model(value interface{}) *gorm.DB {
 func (db *db) Unscoped() *gorm.DB {
 	return db.conn.Unscoped()
 }
+
+// Table
+func (db *db) Table(name string) *gorm.DB {
+	return db.conn.Table(name)
+}

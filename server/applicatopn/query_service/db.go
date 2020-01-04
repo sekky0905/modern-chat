@@ -1,4 +1,4 @@
-package repository
+package query_service
 
 import (
 	"context"
