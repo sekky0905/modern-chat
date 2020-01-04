@@ -145,7 +145,7 @@ func Test_commentRepository_DeleteComment(t *testing.T) {
 			name: "引数で与えた構造体が持つ ID のデータを削除する",
 			c:    commentRepository{},
 			args: args{
-				db: nil,
+				db: DBMock.conn,
 				comment: &model.Comment{
 					ID:         model.CommentID(1),
 					UserID:     "test user id1",
@@ -204,14 +204,14 @@ func Test_commentRepository_DeleteComment(t *testing.T) {
 			// set up
 			for _, v := range tt.setUpCommentData {
 				tt.args.db.Create(&v)
-				if !tt.args.db.NewRecord(v) {
+				if tt.args.db.NewRecord(v) {
 					t.Error("create error")
 				}
 			}
 
 			for _, v := range tt.setUpLikeData {
 				tt.args.db.Create(&v)
-				if !tt.args.db.NewRecord(v) {
+				if tt.args.db.NewRecord(v) {
 					t.Error("create error")
 				}
 			}
