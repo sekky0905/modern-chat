@@ -10,5 +10,6 @@ func (id UserID) String() string {
 
 // User は、ユーザーを表す。
 type User struct {
-	ID UserID
+	ID   UserID
+	Name string
 }
