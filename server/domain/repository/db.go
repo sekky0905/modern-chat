@@ -58,4 +58,5 @@ type DB interface {
 	GetErrors() []error
 	Model(value interface{}) *gorm.DB
 	Unscoped() *gorm.DB
+	Table(name string) *gorm.DB
 }
