@@ -1,4 +1,4 @@
-package err
+package errs
 
 // Error は、error を wrap した interface。
 type Error interface {
