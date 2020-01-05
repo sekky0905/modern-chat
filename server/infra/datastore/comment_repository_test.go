@@ -138,6 +138,7 @@ func Test_commentRepository_DeleteComment(t *testing.T) {
 		setUpCommentData []Comment
 		setUpLikeData    []Like
 		wantID           model.CommentID
+		wantErr          bool
 		wantCommentCount int
 		wantLikeCount    int
 	}{
@@ -195,6 +196,7 @@ func Test_commentRepository_DeleteComment(t *testing.T) {
 				},
 			},
 			wantID:           model.CommentID(1),
+			wantErr:          false,
 			wantCommentCount: 0,
 			wantLikeCount:    0,
 		},
@@ -216,9 +218,16 @@ func Test_commentRepository_DeleteComment(t *testing.T) {
 				}
 			}
 			c := commentRepository{}
-			if got := c.DeleteComment(tt.args.db, tt.args.comment); !reflect.DeepEqual(got, tt.wantID) {
+			got, err := c.DeleteComment(tt.args.db, tt.args.comment)
+			if !reflect.DeepEqual(err, tt.wantErr) {
+				t.Errorf("commentRepository.DeleteComment() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
+			if !reflect.DeepEqual(got, tt.wantID) {
 				t.Errorf("commentRepository.DeleteComment() = %v, want %v", got, tt.wantID)
 			}
+
 			var gotCommentCount int
 			tt.args.db.Model(&Comment{}).Where("id = ?", tt.wantID).Count(&gotCommentCount)
 			if gotCommentCount != tt.wantCommentCount {
