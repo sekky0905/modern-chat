@@ -18,7 +18,9 @@ func NewCommentRepositpry() repository.CommentRepository {
 func (commentRepository) SaveComment(db repository.DB, comment *model.Comment) (model.CommentID, error) {
 	commentDTO := newCommentTranslateFromDomainModel(comment)
 
-	db.Create(&commentDTO)
+	if err := db.Create(&commentDTO).Error; err != nil {
+		return 0, xerrors.New("failed to create comment")
+	}
 
 	if db.NewRecord(commentDTO) {
 		return 0, xerrors.New("failed to create comment")
