@@ -23,7 +23,7 @@ func (chatRoomQueryService) ListChatRoom(db query_service.DB) (*dto.ChatRoomList
 		Joins("INNER JOIN users ON chat_rooms.user_id = users.id").Order("chat_rooms.id desc"). // TODO paging 実装時に Limit 付与すること
 		Scan(&list).
 		Error; err != nil {
-		return nil, xerrors.Errorf("failed to find chat rooms")
+		return nil, xerrors.Errorf("failed to find chat rooms: %w", err)
 	}
 
 	if len(list) == 0 {
