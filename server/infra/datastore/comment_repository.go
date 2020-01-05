@@ -18,7 +18,9 @@ func NewCommentRepositpry() repository.CommentRepository {
 func (commentRepository) SaveComment(db repository.DB, comment *model.Comment) (model.CommentID, error) {
 	commentDTO := newCommentTranslateFromDomainModel(comment)
 
-	db.Create(&commentDTO)
+	if err := db.Create(&commentDTO).Error; err != nil {
+		return 0, xerrors.New("failed to create comment")
+	}
 
 	if db.NewRecord(commentDTO) {
 		return 0, xerrors.New("failed to create comment")
@@ -36,10 +38,15 @@ func (commentRepository) SaveComment(db repository.DB, comment *model.Comment) (
 }
 
 // DeleteComment は、Comment を削除する。
-func (commentRepository) DeleteComment(db repository.DB, comment *model.Comment) model.CommentID {
+func (commentRepository) DeleteComment(db repository.DB, comment *model.Comment) (model.CommentID, error) {
 	commentDTO := newCommentTranslateFromDomainModel(comment)
-	db.Unscoped().Delete(&commentDTO)
+	if err := db.Unscoped().Delete(&commentDTO).Error; err != nil {
+		return 0, xerrors.New("failed to delete comment")
+	}
 	likeDTO := newLikesTranslateFromDomainModel(commentDTO.ID, comment.Liked)
-	db.Unscoped().Delete(&likeDTO)
-	return comment.ID
+	if err := db.Unscoped().Delete(&likeDTO).Error; err != nil {
+		return 0, xerrors.New("failed to delete like")
+	}
+
+	return comment.ID, nil
 }

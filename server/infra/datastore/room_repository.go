@@ -18,7 +18,9 @@ func NewChatRoomRepositpry() repository.ChatRoomRepository {
 func (chatRoomRepository) SaveChatRoom(db repository.DB, room *model.ChatRoom) (model.ChatRoomID, error) {
 	dto := newChatRoomTranslateFromDomainModel(room)
 
-	db.Create(&dto)
+	if err := db.Create(&dto).Error; err != nil {
+		return 0, xerrors.New("failed to create chat room")
+	}
 
 	if db.NewRecord(dto) {
 		return 0, xerrors.New("failed to create chat room")
