@@ -6,6 +6,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/pkg/errors"
 	"github.com/sekky0905/modern-chat/server/domain/repository"
 	"golang.org/x/xerrors"
 )
@@ -279,4 +280,20 @@ func (db *db) Unscoped() *gorm.DB {
 // Table
 func (db *db) Table(name string) *gorm.DB {
 	return db.conn.Table(name)
+}
+
+// CloseTransaction は、トランザクションの後処理。
+func CloseTransaction(tx repository.DB, err error) error {
+	if p := recover(); p != nil { // rewrite panic
+		err = tx.Rollback().Error
+		err = errors.Wrap(err, "failed to roll back")
+		panic(p)
+	} else if err != nil {
+		err = tx.Rollback().Error
+		err = errors.Wrap(err, "failed to roll back")
+	} else {
+		err = tx.Commit().Error
+		err = errors.Wrap(err, "failed to commit")
+	}
+	return err
 }
