@@ -138,7 +138,7 @@ func Test_commentRepository_DeleteComment(t *testing.T) {
 		setUpCommentData []Comment
 		setUpLikeData    []Like
 		wantID           model.CommentID
-		wantErr          bool
+		wantErr          error
 		wantCommentCount int
 		wantLikeCount    int
 	}{
@@ -196,7 +196,7 @@ func Test_commentRepository_DeleteComment(t *testing.T) {
 				},
 			},
 			wantID:           model.CommentID(1),
-			wantErr:          false,
+			wantErr:          nil,
 			wantCommentCount: 0,
 			wantLikeCount:    0,
 		},
