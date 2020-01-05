@@ -54,9 +54,14 @@ func newChatRoomTranslateFromDomainModel(in *model.ChatRoom) ChatRoom {
 	}
 }
 
-// newChatRoomIDFromUint は、Uint の値から ChatRoomID を生成し、返す。
-func newChatRoomIDFromUint(id uint) model.ChatRoomID {
-	return model.ChatRoomID(id)
+func newChatRoomDomainModelFromDTO(in ChatRoom) *model.ChatRoom {
+	return &model.ChatRoom{
+		ID:        model.ChatRoomID(in.ID),
+		Title:     in.Title,
+		UserID:    model.UserID(in.UserID),
+		CreatedAt: in.Model.CreatedAt,
+		UpdatedAt: in.Model.UpdatedAt,
+	}
 }
 
 // Comment は、コメントを表す。
