@@ -6,5 +6,5 @@ import (
 
 // ChatRoomRepository は、ChatRoom の Repository。
 type ChatRoomRepository interface {
-	SaveChatRoom(db DB, room *model.ChatRoom) (model.ChatRoomID, error)
+	SaveChatRoom(db DB, room *model.ChatRoom) (*model.ChatRoom, error)
 }

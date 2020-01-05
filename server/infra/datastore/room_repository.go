@@ -15,16 +15,16 @@ func NewChatRoomRepositpry() repository.ChatRoomRepository {
 }
 
 // SaveChatRoom は、ChatRoom を保存する。
-func (chatRoomRepository) SaveChatRoom(db repository.DB, room *model.ChatRoom) (model.ChatRoomID, error) {
+func (chatRoomRepository) SaveChatRoom(db repository.DB, room *model.ChatRoom) (*model.ChatRoom, error) {
 	dto := newChatRoomTranslateFromDomainModel(room)
 
 	if err := db.Create(&dto).Error; err != nil {
-		return 0, xerrors.New("failed to create chat room")
+		return nil, xerrors.New("failed to create chat room")
 	}
 
 	if db.NewRecord(dto) {
-		return 0, xerrors.New("failed to create chat room")
+		return nil, xerrors.New("failed to create chat room")
 	}
 
-	return newChatRoomIDFromUint(dto.ID), nil
+	return newChatRoomDomainModelFromDTO(dto), nil
 }

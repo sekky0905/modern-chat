@@ -9,7 +9,18 @@ import (
 	"github.com/sekky0905/modern-chat/server/domain/repository"
 )
 
-func compareChatRoom(x, y *ChatRoom) bool {
+func compareChatRoom(x, y *model.ChatRoom) bool {
+	if x == nil && y == nil {
+		return true
+	}
+
+	return x != nil && y != nil &&
+		x.ID == y.ID &&
+		x.UserID == y.UserID &&
+		x.Title == y.Title
+}
+
+func compareChatRoomDTO(x, y *ChatRoom) bool {
 	if x == nil && y == nil {
 		return true
 	}
@@ -27,13 +38,15 @@ func Test_chatRoomRepository_SaveChatRoom(t *testing.T) {
 		room *model.ChatRoom
 	}
 	tests := []struct {
-		name     string
-		c        chatRoomRepository
-		args     args
-		wantID   model.ChatRoomID
-		want     *ChatRoom
-		wantFunc func(target *ChatRoom) bool
-		wantErr  bool
+		name         string
+		c            chatRoomRepository
+		args         args
+		wantID       model.ChatRoomID
+		wantChatRoom *model.ChatRoom
+		wantDTO      ChatRoom
+		wantFunc     func(target *model.ChatRoom) bool
+		wantDTOFunc  func(target ChatRoom) bool
+		wantErr      bool
 	}{
 		{
 			name: "適切なデータを与えると、データが適切に格納されること",
@@ -45,14 +58,22 @@ func Test_chatRoomRepository_SaveChatRoom(t *testing.T) {
 					UserID: "test user id",
 				},
 			},
-			want: &ChatRoom{
+			wantChatRoom: &model.ChatRoom{
+				ID:     model.ChatRoomID(1),
+				Title:  "test title",
+				UserID: "test user id",
+			},
+			wantDTO: ChatRoom{
 				Model: gorm.Model{
 					ID: 1,
 				},
 				Title:  "test title",
 				UserID: "test user id",
 			},
-			wantFunc: func(target *ChatRoom) bool {
+			wantFunc: func(target *model.ChatRoom) bool {
+				return !target.CreatedAt.IsZero() && !target.UpdatedAt.IsZero()
+			},
+			wantDTOFunc: func(target ChatRoom) bool {
 				return !target.CreatedAt.IsZero() && !target.UpdatedAt.IsZero() && target.DeletedAt == nil
 			},
 			wantID:  model.ChatRoomID(1),
@@ -62,21 +83,22 @@ func Test_chatRoomRepository_SaveChatRoom(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c := chatRoomRepository{}
-			gotID, err := c.SaveChatRoom(tt.args.db, tt.args.room)
+			got, err := c.SaveChatRoom(tt.args.db, tt.args.room)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("chatRoomRepository.SaveChatRoom() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 
-			if tt.wantID != gotID {
-				t.Errorf("chatRoomRepository.SaveChatRoom() error = %v, wantErr %v", err, tt.wantErr)
+			opt := cmp.Comparer(compareChatRoom)
+			if diff := cmp.Diff(tt.wantChatRoom, got, opt); diff != "" && tt.wantFunc(got) {
+				t.Errorf("chatRoomRepository.SaveChatRoom() mismatch (-want +got):\n%s", diff)
 			}
 
-			var got ChatRoom
-			tt.args.db.Last(&got)
+			var gotDTO ChatRoom
+			tt.args.db.Last(&got.ID)
 
-			opt := cmp.Comparer(compareChatRoom)
-			if diff := cmp.Diff(tt.want, &got, opt); diff != "" && tt.wantFunc(&got) {
+			opt = cmp.Comparer(compareChatRoomDTO)
+			if diff := cmp.Diff(tt.wantDTO, &gotDTO, opt); diff != "" && tt.wantDTOFunc(gotDTO) {
 				t.Errorf("chatRoomRepository.SaveChatRoom() mismatch (-want +got):\n%s", diff)
 			}
 		})
