@@ -23,12 +23,10 @@ Chat developed with modern technologies.
 - [TypeScript](https://github.com/microsoft/TypeScript)
     - View Library
         - [React](https://github.com/facebook/react)
-    - Universal Framework
-        - [Next.js](https://github.com/zeit/next.js/) 
     - State Container Library
         - [Redux](https://github.com/reduxjs/redux)
     - GraphQL Client Library
-        - [graphql-code-generator](https://github.com/dotansimha/graphql-code-generator)
+    	- [apollographql/react-apollo: React integration for Apollo Client](https://github.com/apollographql/react-apollo) 
 
 ## 参考
 
